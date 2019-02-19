@@ -11,7 +11,7 @@ tags:
     - macOS
 ---
 
-#前置利用
+# 前置利用
 
 proc_pidlistuptrs寻找并返回kqueue中的用户态指针，传入k * 8 + 7大小的user_buff，内核会kalloc相同大小的kernel_buff，若找到的指针数量大于k，实际只拷贝k * 8长度到kernel_buff，最终copyout到user_buff的却有k * 8 + 7。由于kalloc时不会清零，会有7个字节泄露。
 
@@ -22,7 +22,7 @@ CVE-2017-13865
 
 MacOS 10.13 High Sierra (17A365)
 
-#目标tfp0
+# 目标tfp0
 
 由于是port UAF，我们的目标是port所在的内存被free后能kalloc成我们控制的payload。port有专用的zone叫ipc.ports，port所在的内存若想挪做他用必须通过gc回收后再申请。苹果所有设备的zone map是384MB，当zone map 95% full的时候，gc会被触发，此时需要有足够多的内存回收才能祈祷不被杀死。
 
@@ -34,10 +34,11 @@ MacOS 10.13 High Sierra (17A365)
 
 当payload被释放后访问tfp0将崩溃，因此需要构造一个稳定的tfp0。发送一个msg给一个新创建的final_port，偷走final_port的ipc_kmsg queue中的唯一ipc_kmsg pointer，我们就拥有了一块kbuff用以构建fake_kernel_task。将final_port改造成IKOT_TASK类型且指向fake_kernel_task，同时把receive right变成send right。final_port就是稳定的tfp0。
 
-#提权
-
+# 提权
 >proc->p_ucred.cr_uid = 0
+
 >proc->p_ucred.cr_ruid = 0
+
 >proc->p_ucred.cr_svuid = 0
 
 最后运行/bin/sh。
