@@ -48,7 +48,6 @@ macOS 10.13 (17A365)
 
 最后运行/bin/sh。
 
+# 另一种利用方案
 
-
-
-
+[v0rtex](https://siguza.github.io/v0rtex/)
