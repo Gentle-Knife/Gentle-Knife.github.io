@@ -20,8 +20,6 @@ proc_pidlistuptrs寻找并返回kqueue中的用户态指针，传入k * 8 + 7大
 
 CVE-2017-13865
 
-macOS 10.13 (17A365)
-
 # 目标tfp0
 
 由于是port UAF，我们的目标是port所在的内存被free后能kalloc成我们控制的payload。port有专用的zone叫ipc.ports，port所在的内存若想挪做他用必须通过gc回收后再申请。苹果所有设备的zone map是384MB，当zone map 95% full的时候，gc会被触发，此时需要有足够多的内存回收才能祈祷不被杀死。
@@ -35,8 +33,6 @@ macOS 10.13 (17A365)
 当payload被释放后访问tfp0将崩溃，因此需要构造一个稳定的tfp0。发送一个msg给一个新创建的final_port，偷走final_port的ipc_kmsg queue中的唯一ipc_kmsg pointer，我们就拥有了一块kbuff用以构建fake_kernel_task。将final_port改造成IKOT_TASK类型且指向fake_kernel_task，同时把receive right变成send right。final_port就是稳定的tfp0。
 
 CVE-2017-13861
-
-macOS 10.13 (17A365)
 
 # macOS提权
 
