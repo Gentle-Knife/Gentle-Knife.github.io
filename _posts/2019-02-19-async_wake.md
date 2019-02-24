@@ -4,7 +4,7 @@ title:      async_wake
 subtitle:   async_wake的利用 
 date:       2019-02-19
 author:     GK
-header-img: img/post-bg-ios9-web.jpg
+header-img: img/post-bg-desk.jpg
 catalog: 	 true
 tags:
     - async_wake
