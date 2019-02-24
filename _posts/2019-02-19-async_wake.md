@@ -36,16 +36,19 @@ CVE-2017-13861
 
 # macOS提权
 
->proc->p_ucred.cr_uid = 0
+proc->p_ucred.cr_uid = 0
 
->proc->p_ucred.cr_ruid = 0
+proc->p_ucred.cr_ruid = 0
 
->proc->p_ucred.cr_svuid = 0
-
-最后运行/bin/sh。
+proc->p_ucred.cr_svuid = 0
 
 [实现](https://github.com/Gentle-Knife/async_wake)
 
 # 另一种利用方案
 
 [v0rtex](https://siguza.github.io/v0rtex/)
+
+#参考
+
+<https://bugs.chromium.org/p/project-zero/issues/detail?id=1417>
+<http://blog.pangu.io/iosurfacerootuserclient-port-uaf>
