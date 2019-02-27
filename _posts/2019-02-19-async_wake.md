@@ -1,11 +1,11 @@
 ---
 layout:     post
 title:      async_wake
-subtitle:   async_wake的利用 
+subtitle:   async_wake利用 
 date:       2019-02-19
 author:     GK
 header-img: img/post-bg-desk.jpg
-catalog: 	 true
+catalog:    true
 tags:
     - async_wake
     - macOS
