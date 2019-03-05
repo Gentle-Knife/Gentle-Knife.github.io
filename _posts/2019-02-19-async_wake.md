@@ -4,7 +4,7 @@ title:      async_wake
 subtitle:   async_wake利用 
 date:       2019-02-19
 author:     GK
-header-img: img/post-bg-desk.jpg
+header-img: img/home-bg-o.jpg
 catalog:    true
 tags:
     - async_wake
