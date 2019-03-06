@@ -21,6 +21,4 @@ task_for_pid已经添加了patch防止拿到kernel task(0) port的send right。�
 
 毫无意外最终被patch了。macOS 10.11+同样需要entitlement才能使用。
 
-最后附上code injection sample：
-
-[](http://newosxbook.com/src.jl?tree=listings&file=inject.c)
+最后附上[code injection sample](http://newosxbook.com/src.jl?tree=listings&file=inject.c)。
