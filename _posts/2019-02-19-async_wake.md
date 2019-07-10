@@ -46,7 +46,7 @@ tags:
 
 # 没有前置利用的利用方式
 
-[v0rtex](https://siguza.github.io/v0rtex/)
+[v0rtex](https://github.com/Gentle-Knife/docs/blob/master/v0rtex%20_%20IOSurface%20exploit.pdf)
 
 # 参考
 
