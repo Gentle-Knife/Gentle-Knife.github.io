@@ -11,14 +11,14 @@ tags:
     - processor_set_tasks
 ---
 
-task_for_pid能拿到指定pid的task port的send right，等于完全控制了该task，是code injection的必要条件，需要root权限。
+&emsp;&emsp;task_for_pid 能拿到指定 pid 的 task port 的 send right，等于完全控制了该 task，是 code injection 的必要条件，调用需要 root 权限。
 
-task_for_pid已经添加了patch防止拿到kernel task(0) port的send right。在macOS上被taskgated(10.10)或者AMFI(10.11+)管理，弹出消息框用于验证dev tools debug的权限。在ios上需要task_for_pid-allow entitlement才能使用。
+&emsp;&emsp;task_for_pid 已经添加了 patch 防止拿到 kernel task(0) port 的 send right。在 macOS 上被 taskgated(10.10) 或者 AMFI(10.11+) 管理，弹出消息框用于验证 dev tools debug 的权限。在 IOS 上需要 task_for_pid-allow entitlement 才能调用。
 
-于是找到了processor_set_tasks另辟蹊径，同样需要root权限。macOS上能拿到所有task port的send right，包括kernel task。ios上能拿到除了kernel task以外所有task port的send right。
+&emsp;&emsp;于是找到了 processor_set_tasks 作为替代，调用同样需要 root 权限。macOS上 能拿到所有 task port 的 send right，包括 kernel task。IOS 上能拿到除了 kernel task 以外所有 task port 的 send right。
 
 ![ipc](/img/post-processor_set_tasks.jpg)
 
-毫无意外最终被patch了。macOS 10.11+同样需要entitlement才能使用。
+&emsp;&emsp;毫无意外最终被 patch 了。macOS 10.11+ 同样需要 entitlement 才能使用。
 
-最后附上[code injection sample](http://newosxbook.com/src.jl?tree=listings&file=inject.c)。
+&emsp;&emsp;最后附上 [code injection sample](http://newosxbook.com/src.jl?tree=listings&file=inject.c)。
