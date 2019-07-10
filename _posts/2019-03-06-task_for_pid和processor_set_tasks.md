@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      task_for_pid和processor_set_tasks
-subtitle:   task_for_pid和processor_set_tasks
+title:      task_for_pid 和 processor_set_tasks
+subtitle:   task_for_pid 和 processor_set_tasks
 date:       2019-03-06
 author:     GK
 header-img: img/home-bg-o.jpg
