@@ -14,7 +14,7 @@ tags:
 
 # 前置利用
 
-&nbsp;proc_pidlistuptrs 函数返回 kqueue 中的用户态指针，参数传入 k * 8 + 7 长度的 user_buff，内核会 kalloc 相同长度的 kernel_buff。若找到的指针数量大于 k，实际只拷贝 k * 8 长度到 kernel_buff，最终 copyout 到 user_buff 的长度却有 k * 8 + 7。kalloc 时不会清零，所以会有7个字节泄露。
+&emsp;proc_pidlistuptrs 函数返回 kqueue 中的用户态指针，参数传入 k * 8 + 7 长度的 user_buff，内核会 kalloc 相同长度的 kernel_buff。若找到的指针数量大于 k，实际只拷贝 k * 8 长度到 kernel_buff，最终 copyout 到 user_buff 的长度却有 k * 8 + 7。kalloc 时不会清零，所以会有7个字节泄露。
 
 首先填充足够多的 kevent，目的是使得 proc_pidlistuptrs 函数需要返回的内容太长被截断。然后构造不同长度的 OOL_PORTS 数组，将目标 mach port 发送给自己，再传入相同长度减 1 的 user_buff参数，调用 proc_pidlistuptrs 函数拿到 7 个字节的泄漏，泄露的 7 个字节中重复次数最多的值就是目标 mach port 的内核地址。虽然只有 7 个字节，但是 macOS /IOS 上整数是以小端字节序保存且内核地址以 0xffffff 开头，固能恢复出完整的地址。
 
