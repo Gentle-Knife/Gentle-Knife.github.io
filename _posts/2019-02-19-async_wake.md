@@ -20,7 +20,7 @@ tags:
 
 &emsp;&emsp;CVE-2017-13865
 
-# 目标tfp0
+# 目标 tfp0
 
 &emsp;&emsp;漏洞类型是 mach port UAF，我们的目标是 mach port 所在的内存被 free 后能替换成我们控制的 payload。mach port 有专用的 zone 叫做 ipc.ports，mach port 所在的内存若想挪做他用必须先通过 gc 回收 mach port 所在的整页，此类手法有个专用术语叫做 cross zone attack。macOS /IOS 的 zone map 是 384 MB，当 zone map 95% full 的时候，gc 将会被触发，此时占用内存最多的某些进程需要有足够多的内存回收才能祈祷不被系统杀死。
 
@@ -34,7 +34,7 @@ tags:
 
 &emsp;&emsp;CVE-2017-13861
 
-# macOS提权
+# macOS 提权
 
 >proc->p_ucred.cr_uid = 0
 >
