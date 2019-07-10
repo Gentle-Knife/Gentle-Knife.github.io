@@ -18,7 +18,7 @@ tags:
 
 &emsp;&emsp;首先填充足够多的 kevent，目的是使得 proc_pidlistuptrs 函数需要返回的内容太长被截断。然后构造不同长度的 OOL_PORTS 数组，将目标 mach port 发送给自己，再传入相同长度减 1 的 user_buff参数，调用 proc_pidlistuptrs 函数拿到 7 个字节的泄漏，泄露的 7 个字节中重复次数最多的值就是目标 mach port 的内核地址。虽然只有 7 个字节，但是 macOS /IOS 上整数是以小端字节序保存且内核地址以 0xffffff 开头，固能恢复出完整的地址。
 
-CVE-2017-13865
+&emsp;&emsp;CVE-2017-13865
 
 # 目标tfp0
 
@@ -32,14 +32,14 @@ CVE-2017-13865
 
 &emsp;&emsp;当 payload 被 free 后继续访问 tfp0 将引发崩溃，因此需要构造一个稳定的 tfp0。发送一个 mach_msg 给新创建的 final_port，偷走 final_port 的 ipc_kmsg queue 中唯一的 ipc_kmsg pointer，故意造成内核的内存泄露，我们就拥有了一块内存用以构造 fake kernel_task。将 final_port 改造成 IKOT_TASK 类型且指向 fake kernel_task，同时把 receive right 变成 send right。final_port 就被构造稳定的 tfp0。
 
-CVE-2017-13861
+&emsp;&emsp;CVE-2017-13861
 
 # macOS提权
 
 >proc->p_ucred.cr_uid = 0
-
+>
 >proc->p_ucred.cr_ruid = 0
-
+>
 >proc->p_ucred.cr_svuid = 0
 
 [macOS 版本实现](https://github.com/Gentle-Knife/async_wake)
